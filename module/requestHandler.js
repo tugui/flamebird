@@ -1,0 +1,59 @@
+var exec = require("child_process").exec,
+      querystring = require('querystring'),
+      fs = require('fs'),
+      util = require('util'),
+      path = require("path"),
+      url = require('url'),
+      formidable = require('formidable');
+
+var highest = 0;
+
+function start (res) {
+    console.log('start!!!')
+    fs.readFile(path.join(__dirname,'index.html'), function (err, data) {
+        if (err) {
+            console.log(err);
+            res.writeHead(404, {'Content-Type': 'text/html'});
+        }else{
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data.toString());
+        }
+        res.end();
+    })
+}
+
+function deal (res,req) {
+    console.log('deal???')
+    var post = '';
+    req.on('data',function (chunk) {
+        post += chunk;
+    })
+    req.on('end',function () {
+        post = querystring.parse(post)
+        if (post['data'] >= highest) {
+            res.end(util.inspect(post['data']))
+        }else{
+            res.end(util.inspect(highest))
+        }
+    })
+}
+
+function pub (res,req) {
+    console.log('public~~~')
+    var str = url.parse(req.url).pathname.match(/\/[a-zA-z0-9.-]+/g)['1']
+    fs.readFile(path.join('/Users/tugui/node/game/pub',str), function (err, data) {
+        if (err) {
+            console.log(err);
+            res.writeHead(404, {'Content-Type': 'text/html'});
+        }else{
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write(data.toString());
+        }
+        res.end();
+    })
+}
+
+exports.start = start
+exports.deal = deal
+exports.pub = pub
+
