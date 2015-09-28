@@ -41,7 +41,7 @@ function deal (res,req) {
 function pub (res,req) {
     console.log('public~~~')
     var str = url.parse(req.url).pathname.match(/\/[a-zA-z0-9.-]+/g)['1']
-    fs.readFile(path.join('/Users/tugui/node/game/pub',str), function (err, data) {
+    fs.readFile(path.join('pub',str), function (err, data) {
         if (err) {
             console.log(err);
             res.writeHead(404, {'Content-Type': 'text/html'});
