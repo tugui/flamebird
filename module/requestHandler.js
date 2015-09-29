@@ -6,7 +6,7 @@ var exec = require("child_process").exec,
       url = require('url'),
       formidable = require('formidable');
 
-var highest = 0;
+var highest = 15;
 
 function start (res) {
     console.log('start!!!')
@@ -30,6 +30,7 @@ function deal (res,req) {
     })
     req.on('end',function () {
         post = querystring.parse(post)
+
         if (post['data'] >= highest) {
             res.end(util.inspect(post['data']))
         }else{
