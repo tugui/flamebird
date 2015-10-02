@@ -29,12 +29,16 @@ function deal (res,req) {
         post += chunk;
     })
     req.on('end',function () {
-        post = querystring.parse(post)
-
+        post = querystring.parse(post);
+        console.log(post['data']);
         if (post['data'] >= highest) {
-            res.end(util.inspect(post['data']))
+            console.log(''>='');
+            console.log(post['data']);
+            res.end(util.inspect(post['data']));
         }else{
-            res.end(util.inspect(highest))
+            console.log(''<'');
+            console.log(highest);
+            res.end(util.inspect(highest));
         }
     })
 }
