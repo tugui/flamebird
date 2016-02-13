@@ -5,8 +5,8 @@ var mongoose = require('mongoose');
 // };
 // var db = mongoose.createConnection('mongodb://localhost/test');
 
-mongoose.connect('mongodb://127.0.0.1/test');
-var db = mongoose.connection;
+// mongoose.connect('mongodb://127.0.0.1/test');
+// var db = mongoose.connection;
 
 var birdSchema = mongoose.Schema({
     name : String,
@@ -23,19 +23,19 @@ var birdSchema = mongoose.Schema({
 // };
 
 // compile our schema into a model/cannot overwrite `Bird` model once compiled/plus a 's' automatically
-var Birds = mongoose.model('Bird',birdSchema);
-// module.exports = mongoose.model('Bird', birdSchema);
+module.exports = mongoose.model('Bird', birdSchema);
 
+/*
 db.on('error',console.error.bind(console,'connection error:'));
 
-exports.find = function(ip){
+exports.find = function(ip,req,res){
     db.once('open',function(callback){
         var query = {ip : ip}; // 查询条件
         var fields = {name : 1, ip : 1, height : 1,distance : 1}; // 待返回的字段
         var options = {};
 
         // if (typeof Birds == 'undefined') {...}
-        Birds.find(query,fields,options,function (err, result) {
+        Birds.find(query,fields,options,function (err,result) {
             if (err) return console.error(err);
             console.log(result);
             // db.close();// cannot predict the time when there's no more invoking
@@ -60,9 +60,9 @@ exports.create = function(name,ip,height,distance){
         //   db.close();
         // });
 
-        var new = {name : name,ip : ip,height : height ,distance : distance};
+        var bird = {name : name,ip : ip,height : height ,distance : distance};
         // insert base on model
-        Birds.create(new, function(error){
+        Birds.create(bird, function(error){
             if(error) {
                 console.log(error);
             } else {
@@ -73,7 +73,7 @@ exports.create = function(name,ip,height,distance){
     });
 }
 
-export.update(ip,height,distance){
+exports.update = function(ip,height,distance){
     db.once('open',function(callback){
         var conditions = {ip : ip};
         var update = {$set : {height : height, distance : distance}};
@@ -88,7 +88,7 @@ export.update(ip,height,distance){
     });
 }
 
-export.remove(ip){
+exports.remove = function(ip){
     db.once('open',function(callback){
         var conditions = {ip : ip};
         Birds.remove(conditions, function(error){
@@ -100,3 +100,4 @@ export.remove(ip){
         });
     });
 }
+*/
